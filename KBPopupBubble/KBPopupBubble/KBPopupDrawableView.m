@@ -94,16 +94,7 @@
 #pragma mark Getter/Setters
 //
 // GETTERS AND SETTERS
-- (void)setDelegate:(id<KBPopupDrawableChildDelegate>)delegate {
-    _delegate = delegate;
-    if ( self.arrow != nil ) {
-        self.arrow.delegate = delegate;
-    }
-    if ( self.cover != nil ) {
-        self.cover.delegate = delegate;
-    }
-}
-
+//
 - (void)setPosition:(CGFloat)position {
     _position = position;
     [self updateArrow];
@@ -166,7 +157,12 @@
 }
 
 - (void)configure {
-    // Configure pointer arrow 
+    // Configure colors
+    self.drawableColor = kKBPopupDefaultDrawableColor;
+    self.borderColor = kKBPopupDefaultBorderColor;
+    self.borderWidth = kKBPopupDefaultBorderWidth;
+    
+    // Configure pointer arrow
     self.arrow = [[KBPopupArrowView alloc] initWithFrame:[self rectForPosition:_position]];
     self.arrow.backgroundColor = [UIColor clearColor];
     self.arrow.delegate = self;
@@ -234,10 +230,8 @@
     self.cover.clipsToBounds = YES;
     
     // Border
-    if ( self.delegate != nil ) {
-        self.cover.layer.borderColor = self.useBorders ?  [self.delegate borderColor].CGColor : [UIColor clearColor].CGColor;
-        self.cover.layer.borderWidth = self.useBorders ?  [self.delegate borderWidth] : 0.0f;
-    }
+    self.cover.layer.borderColor = self.useBorders ?  [self borderColor].CGColor : [UIColor clearColor].CGColor;
+    self.cover.layer.borderWidth = self.useBorders ?  [self borderWidth] : 0.0f;
 }
 
 @end

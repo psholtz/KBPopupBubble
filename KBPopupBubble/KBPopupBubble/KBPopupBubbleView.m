@@ -43,7 +43,7 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 
 #pragma mark -
 #pragma mark Interface (Private)
-@interface KBPopupBubbleView() <KBPopupDrawableChildDelegate>
+@interface KBPopupBubbleView() 
 {
     CGFloat _targetPosition;
     CGPoint _touch;
@@ -142,6 +142,7 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 - (void)setBorderColor:(UIColor *)borderColor {
     _borderColor = borderColor;
     if ( self.drawable != nil ) {
+        self.drawable.borderColor = borderColor;
         [self.drawable updateCover];
         [self.drawable updateArrow];
     }
@@ -232,7 +233,6 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
                               self.frame.size.width - 2 * self.margin,
                               self.frame.size.height - 2 * self.margin);
     self.drawable = [[KBPopupDrawableView alloc] initWithFrame:rect1];
-    self.drawable.delegate = self;
     self.drawable.position = self.position;
     self.drawable.drawableColor = self.drawableColor;
 

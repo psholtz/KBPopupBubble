@@ -37,7 +37,7 @@
 
 #pragma mark -
 #pragma mark Arrow Delegate
-@protocol KBPopupDrawableChildDelegate
+@protocol KBPopupDrawableChildDelegate <NSObject>
 
 @optional
 - (BOOL)useBorders;
@@ -77,12 +77,12 @@
 @property (nonatomic, assign) NSUInteger side;
 @property (nonatomic, assign) CGFloat position;
 @property (nonatomic, assign) CGFloat cornerRadius;
+@property (nonatomic, assign) CGFloat borderWidth;
 @property (nonatomic, readonly) CGFloat workingWidth;
 @property (nonatomic, readonly) CGFloat workingHeight;
 
 @property (nonatomic, strong) UIColor *drawableColor;
-
-@property (nonatomic, KB_WEAK) id<KBPopupDrawableChildDelegate> delegate;
+@property (nonatomic, strong) UIColor *borderColor;
 
 - (void)updateArrow;
 
