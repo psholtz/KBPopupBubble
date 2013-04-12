@@ -112,7 +112,7 @@ Support
 
 KBPopupBubble is designed to run on all iOS devices (iPhone4, iPhone5 and iPad), and on all iOS versions from 4.3 and up.
 
-KBPopupBubble was designed to be used on ARC-enabled projects. 
+KBPopupBubble is designed to be used on ARC-enabled projects. 
 
 License
 ------- 

@@ -37,6 +37,8 @@
 // Animation constants
 #define kKBPopupAnimationPopIn          @"kKBPopupAnimationPopIn"
 #define kKBPopupAnimationPopOut         @"kKBPopupAnimationPopOut"
+#define kKBAnimationKeyArrowPosition    @"arrowPosition"
+#define kKBAnimationKeyShadowPosition   @"shadowPosition"
 
 // Which side of the bubble to render the pointer
 enum {
@@ -59,12 +61,16 @@ enum {
 #define kKBPopupDefaultBorderColor           [UIColor blackColor]
 #define kKBPopupDefaultShadowOpacity         0.4f
 #define kKBPopupDefaultShadowRadius          3.0f
+#define kKBPopupMinimumShadowRadius          3.0f
 #define kKBPopupDefaultCornerRadius          12.0f
 #define kKBPopupDefaultAnimationDuration     0.4f
-#define kKBPopupDefaultBorderWidth           4.0f;
+#define kKBPopupDefaultBorderWidth           4.0f
+#define kKBPopupDefaultCompletionDelay       0.2f
 #define kKBPopupDefaultShadowOffset          CGSizeMake(5.0f, 5.0f)
 #define kKBPopupDefaultPosition              kKBPopupPointerPositionMiddle
 #define kKBPopupDefaultSide                  kKBPopupPointerSideTop
+
+#warning Make the completion block selectors.
 
 #pragma mark -
 #pragma mark Delegate Protocol
@@ -92,7 +98,7 @@ enum {
 
 @property (nonatomic, assign) BOOL draggable;
 
-@property (nonatomic, strong) UIColor * drawableColor;
+@property (nonatomic, strong) UIColor * drawableColor;  
 @property (nonatomic, strong) UIColor * shadowColor;
 @property (nonatomic, strong) UIColor * borderColor;
 
@@ -100,11 +106,13 @@ enum {
 @property (nonatomic, assign) CGFloat    cornerRadius;
 @property (nonatomic, assign) CGFloat    animationDuration;
 @property (nonatomic, assign) CGFloat    shadowOpacity;
-@property (nonatomic, assign) CGFloat    shadowRadius;
-@property (nonatomic, assign) CGFloat    borderWidth;
+@property (nonatomic, assign) CGFloat    shadowRadius;          
+@property (nonatomic, assign) CGFloat    borderWidth;           
 @property (nonatomic, assign) CGSize     shadowOffset;
 
 @property (nonatomic, strong) UILabel * label;
+
+@property (nonatomic, assign) CGFloat completionBlockDelay;
 
 @property (nonatomic, assign) id<KBPopupBubbleViewDelegate> delegate;
 
@@ -122,5 +130,25 @@ enum {
 
 // Adjust Position
 - (void)setPosition:(CGFloat)position animated:(BOOL)animated;
+
+//
+// Completion Blocks
+//
+/**
+ * To use the completion blocks, pass in a block with signature (void (^)(void)) for binding
+ * with an animation key. The animation key should be a constant identifying one of the four
+ * animations supported by the bubble, specifically those define above in macros:
+ *
+ *  kKBPopupAnimationPopIn
+ *  kKBPopupAnimationPopOut
+ *  kKBAnimationKeyArrowPosition
+ *  kKBAnimationKeyShadowPosition
+ *
+ * For instance, binding a completion block with the key kKBPopupAnimationPopIn will cause that 
+ * block to run when the "pop in" animation sequence terminates.
+ */
+- (void)setCompletionBlock:(void (^)(void))completion forAnimationKey:(NSString*)animationKey;
+
+- (void)removeCompletionBlock:(NSString*)animationKey;
 
 @end

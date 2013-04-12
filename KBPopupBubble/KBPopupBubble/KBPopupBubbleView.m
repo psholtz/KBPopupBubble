@@ -38,9 +38,6 @@ static const CGFloat kKBDefaultPaddingSide = 12.0f;
 
 static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
-static const NSString * kKBAnimationKeyArrowPosition  = @"arrowPosition";
-static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
-
 #pragma mark -
 #pragma mark Interface (Private)
 @interface KBPopupBubbleView() 
@@ -51,6 +48,8 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 
 @property (nonatomic, strong) KBPopupDrawableView * drawable;
 @property (nonatomic, strong) UIView * shadow;
+
+@property (nonatomic, strong) NSMutableDictionary *completionBlocks;
 
 // Class methods
 + (CGRect)defaultKBRectWithCenterPoint:(CGPoint)point;
@@ -128,10 +127,22 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
     _cornerRadius = cornerRadius;
     if ( self.drawable != nil ) {
         self.drawable.cornerRadius = cornerRadius;
+        [self.drawable updateCover];
     }
     
     // Update views
     [self configureShadow];
+}
+
+//
+// Override background color, so that drawable color and
+// background color are the "same" (this is, intuitively,
+// how most people will probably anticipate using this
+// attribute).
+//
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:[UIColor clearColor]];
+    self.drawableColor = backgroundColor;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
@@ -151,6 +162,7 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 - (void)setBorderWidth:(CGFloat)borderWidth {
     _borderWidth = borderWidth;
     if ( self.drawable != nil ) {
+        self.drawable.borderWidth = borderWidth;
         [self.drawable updateCover];
     }
 }
@@ -161,7 +173,16 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 }
 
 - (void)setShadowRadius:(CGFloat)shadowRadius {
-    _shadowRadius = shadowRadius;
+    // Bail, but gently notify the user
+    CGFloat targetRadius = shadowRadius;
+    if ( shadowRadius < kKBPopupMinimumShadowRadius ) {
+        NSLog(@"[KBPopupBubbleView]: Attempting to set shadow radius to: %f", shadowRadius);
+        NSLog(@"[KBPopupBubbleView]: Values less than %f lead to strange-looking UIs, hence setting to minimum.", kKBPopupMinimumShadowRadius);
+        targetRadius = kKBPopupMinimumShadowRadius;
+    }
+    
+    // Update the shadow radius
+    _shadowRadius = targetRadius;
     [self configureShadow];
 }
 
@@ -227,6 +248,9 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
     _shadowColor        = kKBPopupDefaultShadowBackgroundColor;
     _borderColor        = kKBPopupDefaultBorderColor;
     _borderWidth        = kKBPopupDefaultBorderWidth;
+    
+    _completionBlocks     = [[NSMutableDictionary alloc] init];
+    _completionBlockDelay = kKBPopupDefaultCompletionDelay;
     
     CGRect rect1 = CGRectMake(self.margin,
                               self.margin,
@@ -407,26 +431,39 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
 #pragma mark -
 #pragma mark CAAnimation Delegate
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+    // COMPLETION BLOCK
+    void (^completionBlock)(void) = nil;
+    
     // ARROW MOVE
     if ( theAnimation == [self.drawable.arrow.layer animationForKey:(NSString*)kKBAnimationKeyArrowPosition] ) {
         [self setPosition:_targetPosition];
         [self.drawable.arrow.layer removeAllAnimations];
+        completionBlock = [_completionBlocks objectForKey:(NSString*)kKBAnimationKeyArrowPosition];
     }
     
     // SHADOW MOVE
     if ( theAnimation == [self.shadow.layer animationForKey:(NSString*)kKBAnimationKeyShadowPosition] ) {
         [self.shadow.layer removeAllAnimations];
+        completionBlock = [_completionBlocks objectForKey:(NSString*)kKBAnimationKeyShadowPosition];
     }
     
     // POP IN
     if ( theAnimation == [self.layer animationForKey:(NSString*)kKBPopupAnimationPopIn] ) {
         [self.layer removeAllAnimations];
+        completionBlock = [_completionBlocks objectForKey:(NSString*)kKBPopupAnimationPopIn];
     }
     
     // POP OUT
     if ( theAnimation == [self.layer animationForKey:(NSString*)kKBPopupAnimationPopOut] ) {
         [self removeFromSuperview];
         [self.layer removeAllAnimations];
+        completionBlock = [_completionBlocks objectForKey:(NSString*)kKBPopupAnimationPopOut];
+    }
+    
+    if ( completionBlock != nil ) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, self.completionBlockDelay * NSEC_PER_SEC) , dispatch_get_current_queue(), ^{
+            completionBlock();
+        });
     }
 }
 
@@ -478,6 +515,23 @@ static const NSString * kKBAnimationKeyShadowPosition = @"shadowPosition";
         if ( [self pointInside:p withEvent:event] ) {
             [self.delegate didTapBubbleTouchUp:self];
         }
+    }
+}
+
+#pragma mark -
+#pragma mark Completion Blocks
+//
+// Completion Blocks
+//
+- (void)setCompletionBlock:(void (^)(void))completion forAnimationKey:(NSString*)animation {
+    if ( _completionBlocks != nil ) {
+        [_completionBlocks setObject:completion forKey:animation];
+    }
+}
+
+- (void)removeCompletionBlock:(NSString*)animation {
+    if ( self.completionBlocks != nil ) {
+        [self.completionBlocks removeObjectForKey:animation];
     }
 }
 

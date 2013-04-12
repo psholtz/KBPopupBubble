@@ -189,6 +189,12 @@ static const BOOL kKBViewControllerDebug = FALSE;
     }
     bubble.drawableColor = [_colors objectAtIndex:_colorIndex];
     bubble.borderColor = [_colorsBorder objectAtIndex:_colorIndex];
+    
+    // Demonstrate how a completion block works
+    void (^completion)(void) = ^{
+        [bubble setPosition:0.0f animated:YES];
+    };
+    [bubble setCompletionBlock:completion forAnimationKey:kKBPopupAnimationPopIn];
 }
 
 #pragma mark -

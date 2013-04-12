@@ -122,6 +122,7 @@
         self.cover.backgroundColor = drawableColor;
     }
     [self updateCover];
+    [self updateArrow];
 }
 
 #pragma mark -
