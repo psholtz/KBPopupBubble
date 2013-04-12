@@ -70,8 +70,6 @@ enum {
 #define kKBPopupDefaultPosition              kKBPopupPointerPositionMiddle
 #define kKBPopupDefaultSide                  kKBPopupPointerSideTop
 
-#warning Make the completion block selectors.
-
 #pragma mark -
 #pragma mark Delegate Protocol
 @protocol KBPopupBubbleViewDelegate <NSObject>
