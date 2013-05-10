@@ -1,7 +1,7 @@
 KBPopupBubble
 ============= 
 
-![http://farm9.staticflickr.com/8102/8637902993_d996e2ece5.jpg](http://farm9.staticflickr.com/8102/8637902993_d996e2ece5.jpg)
+![http://farm8.staticflickr.com/7291/8723769177_151c2c586a_o.gif](http://farm8.staticflickr.com/7291/8723769177_151c2c586a_o.gif)
 
 *Three different KBPopupBubbles: (i) the blue bubble is rendered using square corners and no drop shadow; (ii) the green bubble is rendered using rounded corners, drop shadow and a shaded border; (iii) the red bubble is configured just like the green bubble, but with no borders. In the blue and green bubbles, the pointer arrow is rendered at the 0.0 position on the top and left sides, respectively. In the red bubble the pointer arrow is rendered at the 1.0 position on the bottom.*
 
@@ -21,7 +21,7 @@ Example Usage
 Probably the easiest way to construct a KBPopupBubble would be to make use of one of the following constructors:
 
 <pre>
-KBPopupBubble *bubble1 = [[KBPopupBubble alloc] initwithCenter:CGPointMake(myPoint.x, myPoint.y)];
+KBPopupBubbleView *bubble1 = [[KBPopupBubbleView alloc] initwithCenter:CGPointMake(x, y)];
 </pre>
 
 In this case, the bubble is centered at the argument point, and the width and height of the frame are constructed using the static constants *kKBDefaultWidth* and *kKBDefaultHeight*, which are defined at the top of the *KBPopupBubbleView.m* file and which the user can customize in the source code.
@@ -29,7 +29,7 @@ In this case, the bubble is centered at the argument point, and the width and he
 A bubble can also be constructed using a standard argument frame, like any other UIView:
 
 <pre>
-KBPopupBubble *bubble2 = [[KBPopupBubble alloc] initWithFrame:myFrame];
+KBPopupBubbleView *bubble2 = [[KBPopupBubbleView alloc] initWithFrame:myFrame];
 </pre>
 
 A constructor taking an NSCoder argument is also defined, so you can configure your bubbles directly in the Interface Builder.
@@ -113,6 +113,8 @@ Support
 KBPopupBubble is designed to run on all iOS devices (iPhone4, iPhone5 and iPad), and on all iOS versions from 4.3 and up.
 
 KBPopupBubble is designed to be used on ARC-enabled projects. 
+
+KBPopupBubble requires linking with the QuartzCore Framework.
 
 License
 ------- 
