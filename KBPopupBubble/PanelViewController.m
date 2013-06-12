@@ -37,12 +37,24 @@
 #define kKBBorderColor      [UIColor blackColor]
 
 #pragma mark -
-#pragma mark Private Interface
+#pragma mark Internal Interface
 @interface PanelViewController ()
 
-- (void)configureLabel:(UILabel*)label;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label1;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label2;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label3;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label4;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label5;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label6;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label7;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label8;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *label9;
 
-- (BOOL)active;
+@property (nonatomic, KB_WEAK) IBOutlet UISwitch *animate;
+@property (nonatomic, KB_WEAK) IBOutlet UISwitch *colors;
+@property (nonatomic, KB_WEAK) IBOutlet UISlider *position2;
+
+@property (nonatomic, KB_WEAK) IBOutlet UIButton *button1;
 
 @end
 
@@ -86,10 +98,10 @@
 }
 
 - (void)configureLabel:(UILabel*)label {
-    label.backgroundColor = kKBLabelColor;
+    label.backgroundColor    = kKBLabelColor;
     label.layer.cornerRadius = kKBCornerRadius;
-    label.layer.borderColor = kKBBorderColor.CGColor;
-    label.layer.borderWidth = kKBBorderWidth;
+    label.layer.borderColor  = kKBBorderColor.CGColor;
+    label.layer.borderWidth  = kKBBorderWidth;
 }
 
 #pragma mark -

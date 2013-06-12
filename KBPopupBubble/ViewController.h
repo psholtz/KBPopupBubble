@@ -28,12 +28,4 @@
 
 @interface ViewController : UIViewController
 
-- (void)setAnimate:(BOOL)value;
-- (void)setShadow:(BOOL)value;
-- (void)setCorners:(BOOL)value;
-- (void)setBorders:(BOOL)value;
-- (void)setSide:(NSUInteger)side;
-- (void)setPosition:(CGFloat)position;
-- (void)setPosition:(CGFloat)position animated:(BOOL)animated;
-
 @end

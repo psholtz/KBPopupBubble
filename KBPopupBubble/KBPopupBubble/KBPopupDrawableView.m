@@ -76,13 +76,8 @@
 @end
 
 #pragma mark -
-#pragma mark Private Interface
+#pragma mark Internal Interface
 @interface KBPopupDrawableView() <KBPopupDrawableChildDelegate>
-
-- (void)configure;
-
-// Return a rect based on argument position
-- (CGRect)rectForPosition:(CGFloat)position;
 
 @end
 
@@ -95,16 +90,6 @@
 //
 // GETTERS AND SETTERS
 //
-- (void)setPosition:(CGFloat)position {
-    _position = position;
-    [self updateArrow];
-}
-
-- (void)setSide:(NSUInteger)side {
-    _side = side;
-    [self updateArrow];
-}
-
 - (void)setUseRoundedCorners:(BOOL)useRoundedCorners {
     _useRoundedCorners = useRoundedCorners;
     [self updateCover];
@@ -114,6 +99,23 @@
     _useBorders = useBorders;
     [self updateCover];
     [self updateArrow];
+}
+
+- (void)setSide:(NSUInteger)side {
+    _side = side;
+    [self updateArrow];
+}
+- (void)setPosition:(CGFloat)position {
+    _position = position;
+    [self updateArrow];
+}
+
+- (CGFloat)workingWidth {
+    return self.frame.size.width - 2 * kKBPopupArrowMargin - kKBPopupArrowWidth;;
+}
+
+- (CGFloat)workingHeight {
+    return self.frame.size.height - 2 * kKBPopupArrowMargin - kKBPopupArrowWidth;
 }
 
 - (void)setDrawableColor:(UIColor *)drawableColor {
@@ -127,17 +129,6 @@
 
 #pragma mark -
 #pragma mark Constructors
-//
-// GETTERS/SETTERS
-//
-- (CGFloat)workingWidth {
-    return self.frame.size.width - 2 * kKBPopupArrowMargin - kKBPopupArrowWidth;;
-}
-
-- (CGFloat)workingHeight {
-    return self.frame.size.height - 2 * kKBPopupArrowMargin - kKBPopupArrowWidth;
-}
-
 //
 // CONSTRUCTORS
 //
@@ -160,8 +151,8 @@
 - (void)configure {
     // Configure colors
     self.drawableColor = kKBPopupDefaultDrawableColor;
-    self.borderColor = kKBPopupDefaultBorderColor;
-    self.borderWidth = kKBPopupDefaultBorderWidth;
+    self.borderColor   = kKBPopupDefaultBorderColor;
+    self.borderWidth   = kKBPopupDefaultBorderWidth;
     
     // Configure pointer arrow
     self.arrow = [[KBPopupArrowView alloc] initWithFrame:[self rectForPosition:_position]];
@@ -210,12 +201,6 @@
     
     // Return the rect
     return rect;
-}
-
-- (void)dealloc {
-    _arrow = nil;
-    _cover = nil;
-    _drawableColor = nil;
 }
 
 #pragma mark -

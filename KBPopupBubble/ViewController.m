@@ -40,19 +40,13 @@ static const BOOL kKBViewControllerDebug = FALSE;
 {
     BOOL _useAnimations;
     BOOL _useColorsRotate;
-    NSArray *_colors;
-    NSArray *_colorsBorder;
+    NSArray * _colors;
+    NSArray * _colorsBorder;
     NSInteger _colorIndex;
 }
 
-@property (nonatomic, strong) PanelViewController *panel;
-@property (nonatomic, strong) KBPopupBubbleView *bubble;
-
-// Display the bubble
-- (void)drawBubble:(CGPoint)point;
-- (void)configure:(KBPopupBubbleView*)bubble;
-
-- (CGFloat)margin;
+@property (nonatomic, strong) PanelViewController * panel;
+@property (nonatomic, strong) KBPopupBubbleView   * bubble;
 
 @end
 

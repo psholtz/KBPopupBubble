@@ -26,6 +26,8 @@
 
 #import "KBPopupHeaders.h"
 
+typedef void (^KBPopupBubbleCompletionBlock)(void);
+
 // Placeholder constants for user to use, for simplicity
 #define kKBPopupPointerPositionLeft       0.0f
 #define kKBPopupPointerPositionMiddle     0.5f
@@ -100,13 +102,13 @@ enum {
 @property (nonatomic, strong) UIColor * shadowColor;
 @property (nonatomic, strong) UIColor * borderColor;
 
+@property (nonatomic, assign) CGSize  shadowOffset;
+@property (nonatomic, assign) CGFloat cornerRadius;
+@property (nonatomic, assign) CGFloat animationDuration;
+@property (nonatomic, assign) CGFloat shadowOpacity;
+@property (nonatomic, assign) CGFloat shadowRadius;          
+@property (nonatomic, assign) CGFloat borderWidth;           
 @property (nonatomic, assign) NSUInteger side;
-@property (nonatomic, assign) CGFloat    cornerRadius;
-@property (nonatomic, assign) CGFloat    animationDuration;
-@property (nonatomic, assign) CGFloat    shadowOpacity;
-@property (nonatomic, assign) CGFloat    shadowRadius;          
-@property (nonatomic, assign) CGFloat    borderWidth;           
-@property (nonatomic, assign) CGSize     shadowOffset;
 
 @property (nonatomic, strong) UILabel * label;
 
@@ -145,7 +147,7 @@ enum {
  * For instance, binding a completion block with the key kKBPopupAnimationPopIn will cause that 
  * block to run when the "pop in" animation sequence terminates.
  */
-- (void)setCompletionBlock:(void (^)(void))completion forAnimationKey:(NSString*)animationKey;
+- (void)setCompletionBlock:(KBPopupBubbleCompletionBlock)completion forAnimationKey:(NSString*)animationKey;
 
 - (void)removeCompletionBlock:(NSString*)animationKey;
 

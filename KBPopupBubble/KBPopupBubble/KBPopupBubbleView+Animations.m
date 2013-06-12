@@ -59,21 +59,16 @@
 }
 
 #pragma mark -
-#pragma mark Private Methods
+#pragma mark Internal Methods
 - (CAAnimation*)generatePopInAnimation {
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = self.animationDuration;
-    scale.values = [NSArray arrayWithObjects:
-                    [NSNumber numberWithFloat:0.5f],
-                    [NSNumber numberWithFloat:1.2f],
-                    [NSNumber numberWithFloat:0.85f],
-                    [NSNumber numberWithFloat:1.0f],
-                    nil];
+    scale.values = @[@0.5f, @1.2f, @0.85f, @1.0f];
     
     CABasicAnimation * fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeIn.duration = self.animationDuration * 0.4f;
-    fadeIn.fromValue = [NSNumber numberWithFloat:0.0f];
-    fadeIn.toValue = [NSNumber numberWithFloat:1.0f];
+    fadeIn.duration  = self.animationDuration * 0.4f;
+    fadeIn.fromValue = @0.0f;
+    fadeIn.toValue   = @1.0f;
     fadeIn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     fadeIn.fillMode = kCAFillModeForwards;
     
@@ -84,17 +79,13 @@
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = self.animationDuration;
     scale.removedOnCompletion = NO;
-    scale.values = [NSArray arrayWithObjects:
-                    [NSNumber numberWithFloat:1.00f],
-                    [NSNumber numberWithFloat:1.20f],
-                    [NSNumber numberWithFloat:0.75f],
-                    nil];
+    scale.values = @[@1.0f, @1.2f, @0.75f];
     
     CGFloat fraction = 0.4f;
     CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeOut.duration = self.animationDuration * fraction;
-    fadeOut.fromValue = [NSNumber numberWithFloat:1.0f];
-    fadeOut.toValue = [NSNumber numberWithFloat:0.0f];
+    fadeOut.duration  = self.animationDuration * fraction;
+    fadeOut.fromValue = @1.0f;
+    fadeOut.toValue   = @0.0f;
     fadeOut.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     fadeOut.beginTime = self.animationDuration * (1.0f - fraction);
     fadeOut.fillMode = kCAFillModeForwards;

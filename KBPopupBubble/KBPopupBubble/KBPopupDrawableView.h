@@ -74,10 +74,10 @@
 @property (nonatomic, assign) BOOL useRoundedCorners;
 @property (nonatomic, assign) BOOL useBorders;
 
-@property (nonatomic, assign) NSUInteger side;
-@property (nonatomic, assign) CGFloat position;
-@property (nonatomic, assign) CGFloat cornerRadius;
-@property (nonatomic, assign) CGFloat borderWidth;
+@property (nonatomic, assign)   NSUInteger side;
+@property (nonatomic, assign)   CGFloat position;
+@property (nonatomic, assign)   CGFloat cornerRadius;
+@property (nonatomic, assign)   CGFloat borderWidth;
 @property (nonatomic, readonly) CGFloat workingWidth;
 @property (nonatomic, readonly) CGFloat workingHeight;
 

@@ -39,7 +39,7 @@ static const CGFloat kKBDefaultPaddingSide = 12.0f;
 static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 #pragma mark -
-#pragma mark Interface (Private)
+#pragma mark Internal Interface
 @interface KBPopupBubbleView() 
 {
     CGFloat _targetPosition;
@@ -50,13 +50,6 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 @property (nonatomic, strong) UIView * shadow;
 
 @property (nonatomic, strong) NSMutableDictionary *completionBlocks;
-
-// Class methods
-+ (CGRect)defaultKBRectWithCenterPoint:(CGPoint)point;
-
-// Instance methods
-- (void)configure;
-- (UIBezierPath*)configureShadowPathWithPosition:(CGFloat)position;
 
 @end
 
@@ -69,6 +62,21 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 //
 // SELECTORS
 //
+
+// POSITIONS
+- (void)setPosition:(CGFloat)position {
+    // Update model
+    if ( position < 0.0f || position > 1.0f ) return;
+    _position = position;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setPosition:position];
+    }
+    
+    // Update views
+    [self configureShadow];
+}
+
+// BOOLEAN
 - (void)setUseDropShadow:(BOOL)useDropShadow {
     _useDropShadow = useDropShadow;
     [self configureShadow];
@@ -76,62 +84,40 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 - (void)setUseRoundedCorners:(BOOL)useRoundedCorners {
     _useRoundedCorners = useRoundedCorners;
-    if ( self.drawable != nil ) {
-        self.drawable.useRoundedCorners = useRoundedCorners;
-        self.drawable.cornerRadius = self.cornerRadius;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setUseRoundedCorners:useRoundedCorners];
+        [[self drawable] setCornerRadius:[self cornerRadius]];
     }
     [self configureShadow];
 }
 
 - (void)setUseBorders:(BOOL)useBorders {
     _useBorders = useBorders;
-    if ( self.drawable != nil ) {
-        self.drawable.useBorders = useBorders;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setUseBorders:useBorders];
     }
 }
 
+// COLORS
 - (void)setDrawableColor:(UIColor *)drawableColor {
     _drawableColor = drawableColor;
-    if ( self.drawable != nil ) {
-        self.drawable.drawableColor = drawableColor;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setDrawableColor:drawableColor];
     }
 }
 
-- (void)setPosition:(CGFloat)position {
-    // Update model
-    if ( position < 0.0f || position > 1.0f ) return;
-    _position = position;
-    if ( self.drawable != nil ) {
-        self.drawable.position = position;
-    }
-    
-    // Update views
+- (void)setShadowColor:(UIColor *)shadowColor {
+    _shadowColor = shadowColor;
     [self configureShadow];
 }
 
-- (void)setSide:(NSUInteger)side {
-    // Update model
-    if( side != kKBPopupPointerSideTop &&
-        side != kKBPopupPointerSideBottom &&
-        side != kKBPopupPointerSideLeft &&
-        side != kKBPopupPointerSideRight ) return;
-    _side = side;
-    self.drawable.side = side;
-    
-    // Update views
-    [self configureShadow];
-}
-
-- (void)setCornerRadius:(CGFloat)cornerRadius {
-    // Update model
-    _cornerRadius = cornerRadius;
-    if ( self.drawable != nil ) {
-        self.drawable.cornerRadius = cornerRadius;
-        [self.drawable updateCover];
+- (void)setBorderColor:(UIColor *)borderColor {
+    _borderColor = borderColor;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setBorderColor:borderColor];
+        [[self drawable] updateCover];
+        [[self drawable] updateArrow];
     }
-    
-    // Update views
-    [self configureShadow];
 }
 
 //
@@ -142,29 +128,25 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 //
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [super setBackgroundColor:[UIColor clearColor]];
-    self.drawableColor = backgroundColor;
+    [self setDrawableColor:backgroundColor];
 }
 
-- (void)setShadowColor:(UIColor *)shadowColor {
-    _shadowColor = shadowColor;
+// DIMENSIONS
+- (void)setShadowOffset:(CGSize)shadowOffset {
+    _shadowOffset = shadowOffset;
     [self configureShadow];
 }
 
-- (void)setBorderColor:(UIColor *)borderColor {
-    _borderColor = borderColor;
-    if ( self.drawable != nil ) {
-        self.drawable.borderColor = borderColor;
-        [self.drawable updateCover];
-        [self.drawable updateArrow];
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+    // Update model
+    _cornerRadius = cornerRadius;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setCornerRadius:cornerRadius];
+        [[self drawable] updateCover];
     }
-}
-
-- (void)setBorderWidth:(CGFloat)borderWidth {
-    _borderWidth = borderWidth;
-    if ( self.drawable != nil ) {
-        self.drawable.borderWidth = borderWidth;
-        [self.drawable updateCover];
-    }
+    
+    // Update views
+    [self configureShadow];
 }
 
 - (void)setShadowOpacity:(CGFloat)shadowOpacity {
@@ -186,8 +168,24 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     [self configureShadow];
 }
 
-- (void)setShadowOffset:(CGSize)shadowOffset {
-    _shadowOffset = shadowOffset;
+- (void)setBorderWidth:(CGFloat)borderWidth {
+    _borderWidth = borderWidth;
+    if ( [self drawable] != nil ) {
+        [[self drawable] setBorderWidth:borderWidth];
+        [[self drawable] updateCover];
+    }
+}
+
+- (void)setSide:(NSUInteger)side {
+    // Update model
+    if( side != kKBPopupPointerSideTop &&
+        side != kKBPopupPointerSideBottom &&
+        side != kKBPopupPointerSideLeft &&
+        side != kKBPopupPointerSideRight ) return;
+    _side = side;
+    [[self drawable] setSide:side];
+    
+    // Update views
     [self configureShadow];
 }
 
@@ -231,8 +229,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 }
 
 - (void)configure {
-    self.backgroundColor = [UIColor clearColor];
-    self.drawableColor   = kKBPopupDefaultDrawableColor;
+    [self setBackgroundColor:[UIColor clearColor]];
+    _drawableColor   = kKBPopupDefaultDrawableColor;
     
     _margin      = kKBDefaultMargin;
     _paddingSide = kKBDefaultPaddingSide;
@@ -252,72 +250,72 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     _completionBlocks     = [[NSMutableDictionary alloc] init];
     _completionBlockDelay = kKBPopupDefaultCompletionDelay;
     
-    CGRect rect1 = CGRectMake(self.margin,
-                              self.margin,
-                              self.frame.size.width - 2 * self.margin,
-                              self.frame.size.height - 2 * self.margin);
-    self.drawable = [[KBPopupDrawableView alloc] initWithFrame:rect1];
-    self.drawable.position = self.position;
-    self.drawable.drawableColor = self.drawableColor;
+    CGRect rect1 = CGRectMake(_margin,
+                              _margin,
+                              [self frame].size.width - 2 * _margin,
+                              [self frame].size.height - 2 * _margin);
+    _drawable = [[KBPopupDrawableView alloc] initWithFrame:rect1];
+    _drawable.position = _position;
+    _drawable.drawableColor = _drawableColor;
 
-    self.shadow = [[UIView alloc] initWithFrame:rect1];
-    self.shadow.backgroundColor = [UIColor clearColor];
+    _shadow = [[UIView alloc] initWithFrame:rect1];
+    _shadow.backgroundColor = [UIColor clearColor];
     
-    CGRect rect2 = self.drawable.bounds;
+    CGRect rect2 = _drawable.bounds;
     CGRect rect3 = CGRectMake(_paddingSide,
                               _paddingTop,
                               rect2.size.width - 2 * _paddingSide,
                               rect2.size.height - 2 * _paddingTop);
-    self.label = [[UILabel alloc] initWithFrame:rect3];
-    self.label.backgroundColor = [UIColor clearColor];
-    self.label.numberOfLines = 0;
-    [self.drawable addSubview:self.label];
+    _label = [[UILabel alloc] initWithFrame:rect3];
+    _label.backgroundColor = [UIColor clearColor];
+    _label.numberOfLines = 0;
+    [_drawable addSubview:_label];
     
-    self.useDropShadow = kKBPopupDefaultUseDropShadow;
-    self.useRoundedCorners = kKBPopupDefaultUseRoundedCorners;
-    self.useBorders = kKBPopupDefaultUseBorders;
-    self.draggable = kKBPopupDefaultDraggable;
+    [self setUseDropShadow:kKBPopupDefaultUseDropShadow];
+    [self setUseRoundedCorners:kKBPopupDefaultUseRoundedCorners];
+    [self setUseBorders:kKBPopupDefaultUseBorders];
+    [self setDraggable:kKBPopupDefaultDraggable];
     
-    self.userInteractionEnabled = YES;
+    [self setUserInteractionEnabled:YES];
     
-    [self addSubview:self.shadow];
-    [self addSubview:self.drawable];
+    [self addSubview:_shadow];
+    [self addSubview:_drawable];
 }
 
 - (void)configureShadow {
-    if ( self.shadow != nil && self.drawable.arrow != nil ) {
-        self.shadow.layer.shadowColor = self.shadowColor.CGColor;
-        self.shadow.layer.shadowOpacity = (self.useDropShadow == YES) ? self.shadowOpacity : 0.0f;
-        self.shadow.layer.shadowRadius = self.shadowRadius;
-        self.shadow.layer.shadowOffset = self.shadowOffset;
-        self.shadow.layer.shadowPath = [self configureShadowPathWithPosition:self.position].CGPath;
-        self.shadow.layer.masksToBounds = NO;
+    if ( _shadow != nil && _drawable.arrow != nil ) {
+        _shadow.layer.shadowColor   = _shadowColor.CGColor;
+        _shadow.layer.shadowOpacity = ([self useDropShadow] == YES) ? _shadowOpacity : 0.0f;
+        _shadow.layer.shadowRadius  = _shadowRadius;
+        _shadow.layer.shadowOffset  = _shadowOffset;
+        _shadow.layer.shadowPath    = [self configureShadowPathWithPosition:_position].CGPath;
+        _shadow.layer.masksToBounds = NO;
     }
 }
 
 - (UIBezierPath*)configureShadowPathWithPosition:(CGFloat)position {
-    if ( self.drawable != nil ) {
+    if ( _drawable != nil ) {
         // Get the variables
         CGFloat base = kKBPopupArrowWidth / 2.0f;
-        CGRect rect1 = self.drawable.arrow.frame;
+        CGRect rect1 = _drawable.arrow.frame;
         CGFloat targetX = 0.0;
         CGFloat targetY = 0.0;
-        switch ( self.side) {
+        switch ( _side) {
             case kKBPopupPointerSideTop:
             case kKBPopupPointerSideBottom:
-                targetX = kKBPopupArrowMargin + self.drawable.workingWidth * position;
+                targetX = kKBPopupArrowMargin + _drawable.workingWidth * position;
                 targetY = rect1.origin.y;
                 break;
             case kKBPopupPointerSideLeft:
             case kKBPopupPointerSideRight:
                 targetX = rect1.origin.x;
-                targetY = kKBPopupArrowMargin + self.drawable.workingHeight * position;
+                targetY = kKBPopupArrowMargin + _drawable.workingHeight * position;
                 break;
         }
         
         // Configure the Bezier Path
-        UIBezierPath *path = self.useRoundedCorners ? [UIBezierPath bezierPathWithRoundedRect:self.shadow.bounds cornerRadius:self.cornerRadius] : [UIBezierPath bezierPathWithRect:self.shadow.bounds];
-        switch ( self.side ) {
+        UIBezierPath *path = _useRoundedCorners ? [UIBezierPath bezierPathWithRoundedRect:_shadow.bounds cornerRadius:_cornerRadius] : [UIBezierPath bezierPathWithRect:_shadow.bounds];
+        switch ( _side ) {
             case kKBPopupPointerSideTop:
                 [path moveToPoint:CGPointMake(targetX, targetY + kKBPopupArrowHeight)];
                 [path addLineToPoint:CGPointMake(targetX + base, targetY)];
@@ -352,14 +350,6 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
                       point.y - kKBDefaultHeight/2.0f,
                       kKBDefaultWidth,
                       kKBDefaultHeight);
-}
-
-- (void)dealloc {
-    _drawable = nil;
-    _drawableColor = nil;
-    _shadow = nil;
-    _shadowColor = nil;
-    _borderColor = nil;
 }
 
 #pragma mark -
@@ -523,7 +513,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 //
 // Completion Blocks
 //
-- (void)setCompletionBlock:(void (^)(void))completion forAnimationKey:(NSString*)animation {
+- (void)setCompletionBlock:(KBPopupBubbleCompletionBlock)completion forAnimationKey:(NSString*)animation {
     if ( _completionBlocks != nil ) {
         [_completionBlocks setObject:completion forKey:animation];
     }
