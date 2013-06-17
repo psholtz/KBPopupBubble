@@ -108,15 +108,16 @@
 #pragma mark IBAction Method
 - (IBAction)pressButton1:(id)sender {
     if ( self.delegate != nil && [self.delegate respondsToSelector:@selector(margin)] ) {
+        KB_WEAK_REF typeof(self) _weakSelf = self;
         [UIView animateWithDuration:kKBSlideDuration
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             CGRect f = CGRectMake(self.view.frame.origin.x,
-                                                   [self active] ? (-1) * (self.view.frame.size.height - [self.delegate margin]) : 0.0f,
-                                                   self.view.frame.size.width,
-                                                   self.view.frame.size.height);
-                             self.view.frame = f;
+                             CGRect f = CGRectMake(_weakSelf.view.frame.origin.x,
+                                                   _weakSelf.active ? (-1) * (_weakSelf.view.frame.size.height - [_weakSelf.delegate margin]) : 0.0f,
+                                                   _weakSelf.view.frame.size.width,
+                                                   _weakSelf.view.frame.size.height);
+                             _weakSelf.view.frame = f;
                          }
                          completion:^(BOOL completed) {
                          }

@@ -185,8 +185,10 @@ static const BOOL kKBViewControllerDebug = FALSE;
     bubble.borderColor = [_colorsBorder objectAtIndex:_colorIndex];
     
     // Demonstrate how a completion block works
+    // (IMPORTANT: Use a weak reference here, otherwise you end up with a retain cycle and dealloc never gets called!)
+    KB_WEAK_REF typeof(bubble) _weakBubble = bubble;
     void (^completion)(void) = ^{
-        [bubble setPosition:0.0f animated:YES];
+        [_weakBubble setPosition:0.0f animated:YES];
     };
     [bubble setCompletionBlock:completion forAnimationKey:kKBPopupAnimationPopIn];
 }
@@ -252,21 +254,21 @@ static const BOOL kKBViewControllerDebug = FALSE;
 - (void)didTapBubbleTouchDown:(id)sender {
     // Implement delegate callback however you wish
     if ( kKBViewControllerDebug ) {
-        NSLog(@"++ Press Bubble DOWN");
+        DLog(@"++ Press Bubble DOWN");
     }
 }
 
 - (void)didTapBubbleTouchDrag:(id)sender {
     // Implement delegate callback however you wish
     if ( kKBViewControllerDebug ) {
-        NSLog(@"++ Press Bubble DRAG");
+        DLog(@"++ Press Bubble DRAG");
     }
 }
 
 - (void)didTapBubbleTouchUp:(id)sender {
     // Implement delegate callback however you wish
     if ( kKBViewControllerDebug ) {
-        NSLog(@"++ Press Bubble UP");
+        DLog(@"++ Press Bubble UP");
     }
 }
 

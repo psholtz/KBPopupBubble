@@ -158,8 +158,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     // Bail, but gently notify the user
     CGFloat targetRadius = shadowRadius;
     if ( shadowRadius < kKBPopupMinimumShadowRadius ) {
-        NSLog(@"[KBPopupBubbleView]: Attempting to set shadow radius to: %f", shadowRadius);
-        NSLog(@"[KBPopupBubbleView]: Values less than %f lead to strange-looking UIs, hence setting to minimum.", kKBPopupMinimumShadowRadius);
+        ALog(@"[KBPopupBubbleView]: Attempting to set shadow radius to: %f", shadowRadius);
+        ALog(@"[KBPopupBubbleView]: Values less than %f lead to strange-looking UIs, hence setting to minimum.", kKBPopupMinimumShadowRadius);
         targetRadius = kKBPopupMinimumShadowRadius;
     }
     
