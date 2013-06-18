@@ -41,15 +41,12 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 #pragma mark -
 #pragma mark Internal Interface
 @interface KBPopupBubbleView() 
-{
-    CGFloat _targetPosition;
-    CGPoint _touch;
-}
 
 @property (nonatomic, strong) KBPopupDrawableView * drawable;
 @property (nonatomic, strong) UIView * shadow;
-
-@property (nonatomic, strong) NSMutableDictionary *completionBlocks;
+@property (nonatomic, assign) CGFloat targetPosition;
+@property (nonatomic, assign) CGPoint touch;
+@property (nonatomic, strong) NSMutableDictionary * completionBlocks;
 
 @end
 
@@ -68,9 +65,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     // Update model
     if ( position < 0.0f || position > 1.0f ) return;
     _position = position;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setPosition:position];
-    }
+    [[self drawable] setPosition:position];
     
     // Update views
     [self configureShadow];
@@ -84,26 +79,20 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 - (void)setUseRoundedCorners:(BOOL)useRoundedCorners {
     _useRoundedCorners = useRoundedCorners;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setUseRoundedCorners:useRoundedCorners];
-        [[self drawable] setCornerRadius:[self cornerRadius]];
-    }
+    [[self drawable] setUseRoundedCorners:useRoundedCorners];
+    [[self drawable] setCornerRadius:[self cornerRadius]];
     [self configureShadow];
 }
 
 - (void)setUseBorders:(BOOL)useBorders {
     _useBorders = useBorders;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setUseBorders:useBorders];
-    }
+    [[self drawable] setUseBorders:useBorders];
 }
 
 // COLORS
 - (void)setDrawableColor:(UIColor *)drawableColor {
     _drawableColor = drawableColor;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setDrawableColor:drawableColor];
-    }
+    [[self drawable] setDrawableColor:drawableColor];
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
@@ -113,11 +102,9 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 - (void)setBorderColor:(UIColor *)borderColor {
     _borderColor = borderColor;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setBorderColor:borderColor];
-        [[self drawable] updateCover];
-        [[self drawable] updateArrow];
-    }
+    [[self drawable] setBorderColor:borderColor];
+    [[self drawable] updateCover];
+    [[self drawable] updateArrow];
 }
 
 //
@@ -140,10 +127,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 - (void)setCornerRadius:(CGFloat)cornerRadius {
     // Update model
     _cornerRadius = cornerRadius;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setCornerRadius:cornerRadius];
-        [[self drawable] updateCover];
-    }
+    [[self drawable] setCornerRadius:cornerRadius];
+    [[self drawable] updateCover];
     
     // Update views
     [self configureShadow];
@@ -170,10 +155,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
     _borderWidth = borderWidth;
-    if ( [self drawable] != nil ) {
-        [[self drawable] setBorderWidth:borderWidth];
-        [[self drawable] updateCover];
-    }
+    [[self drawable] setBorderWidth:borderWidth];
+    [[self drawable] updateCover];
 }
 
 - (void)setSide:(NSUInteger)side {
@@ -378,7 +361,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
         self.position = position;
     } else {
         // Get stats for the arrow rect
-        _targetPosition = position;
+        self.targetPosition = position;
         CGRect rect1 = self.drawable.arrow.frame;
         CGFloat targetX = 0.0;
         CGFloat targetY = 0.0;
@@ -426,7 +409,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     
     // ARROW MOVE
     if ( theAnimation == [self.drawable.arrow.layer animationForKey:(NSString*)kKBAnimationKeyArrowPosition] ) {
-        [self setPosition:_targetPosition];
+        [self setPosition:self.targetPosition];
         [self.drawable.arrow.layer removeAllAnimations];
         completionBlock = [_completionBlocks objectForKey:(NSString*)kKBAnimationKeyArrowPosition];
     }
@@ -472,7 +455,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     
     // Save for dragging
     if ( self.draggable ) {
-        _touch = p2;
+        self.touch = p2;
     }
 }
 
@@ -489,13 +472,13 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     
     if ( self.draggable ) {
         // Perform the drag
-        CGFloat dx = p2.x - _touch.x, dy = p2.y - _touch.y;
+        CGFloat dx = p2.x - self.touch.x, dy = p2.y - self.touch.y;
         CGFloat nx = self.frame.origin.x + dx;
         CGFloat ny = self.frame.origin.y + dy;
         self.frame = CGRectMake(nx, ny, self.frame.size.width, self.frame.size.height);
     
         // Update for dragging
-        _touch = p2;
+        self.touch = p2;
     }
 }
 
@@ -514,8 +497,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 // Completion Blocks
 //
 - (void)setCompletionBlock:(KBPopupBubbleCompletionBlock)completion forAnimationKey:(NSString*)animation {
-    if ( _completionBlocks != nil ) {
-        [_completionBlocks setObject:completion forKey:animation];
+    if ( self.completionBlocks != nil ) {
+        [self.completionBlocks setObject:completion forKey:animation];
     }
 }
 

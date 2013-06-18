@@ -204,27 +204,19 @@ static const BOOL kKBViewControllerDebug = FALSE;
 }
 
 - (void)setShadow:(BOOL)value {
-    if ( self.bubble != nil ) {
-        [self.bubble setUseDropShadow:value];
-    }
+    [_bubble setUseDropShadow:value];
 }
 
 - (void)setCorners:(BOOL)value {
-    if ( self.bubble != nil ) {
-        [self.bubble setUseRoundedCorners:value];
-    }
+    [_bubble setUseRoundedCorners:value];
 }
 
 - (void)setBorders:(BOOL)value {
-    if ( self.bubble != nil ) {
-        self.bubble.useBorders = value;
-    }
+    [_bubble setUseBorders:value];
 }
 
 - (void)setDraggable:(BOOL)value {
-    if ( self.bubble != nil ) {
-        self.bubble.draggable = value;
-    }
+    [_bubble setDraggable:value];
 }
 
 - (void)setColors:(BOOL)value {
@@ -232,21 +224,15 @@ static const BOOL kKBViewControllerDebug = FALSE;
 }
 
 - (void)setSide:(NSUInteger)side {
-    if ( self.bubble != nil ) {
-        [self.bubble setSide:side];
-    }
+    [_bubble setSide:side];
 }
 
 - (void)setPosition:(CGFloat)position {
-    if ( self.bubble != nil ) {
-        [self.bubble setPosition:position];
-    }
+    [_bubble setPosition:position];
 }
 
 - (void)setPosition:(CGFloat)position animated:(BOOL)animated {
-    if ( self.bubble != nil ) {
-        [self.bubble setPosition:position animated:animated];
-    }
+    [_bubble setPosition:position animated:animated];
 }
 
 #pragma mark -

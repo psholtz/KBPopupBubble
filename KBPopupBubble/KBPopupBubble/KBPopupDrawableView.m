@@ -120,9 +120,7 @@
 
 - (void)setDrawableColor:(UIColor *)drawableColor {
     _drawableColor = drawableColor;
-    if ( self.cover != nil ) {
-        self.cover.backgroundColor = drawableColor;
-    }
+    [[self cover] setBackgroundColor:drawableColor];
     [self updateCover];
     [self updateArrow];
 }
