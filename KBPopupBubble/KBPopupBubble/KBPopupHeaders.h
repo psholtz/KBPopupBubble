@@ -60,7 +60,7 @@
 #ifdef DEBUG
 #define DLog(...) NSLog(__VA_ARGS__)
 #else
-#define DLog(...) NSLog(__VA_ARGS__)
+#define DLog(...) /* */
 #endif // DEBUG
 #endif // DLog
 

@@ -127,8 +127,8 @@
 		86ED2F0517109B9B0097EC66 = {
 			isa = PBXGroup;
 			children = (
-				86ED2F1717109B9B0097EC66 /* KBPopupBubble */,
 				86ED2F1017109B9B0097EC66 /* Frameworks */,
+				86ED2F1717109B9B0097EC66 /* KBPopupBubble */,
 				86ED2F0F17109B9B0097EC66 /* Products */,
 			);
 			sourceTree = "<group>";
