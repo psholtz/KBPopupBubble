@@ -49,6 +49,7 @@
 @property (nonatomic, KB_WEAK) IBOutlet UILabel *label7;
 @property (nonatomic, KB_WEAK) IBOutlet UILabel *label8;
 @property (nonatomic, KB_WEAK) IBOutlet UILabel *label9;
+@property (nonatomic, KB_WEAK) IBOutlet UILabel *labelButton;
 
 @property (nonatomic, KB_WEAK) IBOutlet UISwitch *animate;
 @property (nonatomic, KB_WEAK) IBOutlet UISwitch *colors;
@@ -95,6 +96,48 @@
     [self configureLabel:self.label7];
     [self configureLabel:self.label8];
     [self configureLabel:self.label9];
+    
+    // Slight hack for iOS7 UIs
+    if ( SYSTEM_VERSION_LESS_THAN(@"7.0") ) {
+        [self adjustSwitchControl:self.animate];
+        [self adjustSwitchControl:self.shadow];
+        [self adjustSwitchControl:self.corners];
+        [self adjustSwitchControl:self.draggable];
+        [self adjustSwitchControl:self.colors];
+        [self adjustSwitchControl:self.borders];
+            
+        [self adjustSegmentedControl:self.side];
+        [self adjustSegmentedControl:self.position1];
+    }
+    
+    if ( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") ) {
+        // Adjust the configure button downwards
+        CGFloat margin1 = 30.0f;
+        [self adjustButton:self.button1 withLabel:self.labelButton withMargin:margin1];
+            
+        // Adjust the rest of the controls downwards
+        CGFloat margin2 = 15.0f;
+        [self adjustView:self.animate withMargin:margin2];
+        [self adjustView:self.shadow withMargin:margin2];
+        [self adjustView:self.corners withMargin:margin2];
+        [self adjustView:self.draggable withMargin:margin2];
+        [self adjustView:self.colors withMargin:margin2];
+        [self adjustView:self.borders withMargin:margin2];
+            
+        [self adjustView:self.label1 withMargin:margin2];
+        [self adjustView:self.label2 withMargin:margin2];
+        [self adjustView:self.label3 withMargin:margin2];
+        [self adjustView:self.label4 withMargin:margin2];
+        [self adjustView:self.label5 withMargin:margin2];
+        [self adjustView:self.label6 withMargin:margin2];
+        [self adjustView:self.label7 withMargin:margin2];
+        [self adjustView:self.label8 withMargin:margin2];
+        [self adjustView:self.label9 withMargin:margin2];
+            
+        [self adjustView:self.side withMargin:margin2];
+        [self adjustView:self.position1 withMargin:margin2];
+        [self adjustView:self.position2 withMargin:margin2];
+    }
 }
 
 - (void)configureLabel:(UILabel*)label {
@@ -102,6 +145,29 @@
     label.layer.cornerRadius = kKBCornerRadius;
     label.layer.borderColor  = kKBBorderColor.CGColor;
     label.layer.borderWidth  = kKBBorderWidth;
+}
+
+- (void)adjustSwitchControl:(UISwitch*)control {
+    CGRect tmp = control.frame;
+    control.frame = CGRectMake(205.0f, tmp.origin.y, tmp.size.width, tmp.size.height);
+}
+
+- (void)adjustSegmentedControl:(UISegmentedControl*)control {
+    CGRect tmp = control.frame;
+    control.frame = CGRectMake(tmp.origin.x, tmp.origin.y - 8.0f, tmp.size.width, tmp.size.height);
+}
+
+- (void)adjustButton:(UIButton*)button withLabel:(UILabel*)label withMargin:(CGFloat)margin {
+    CGRect tmp1 = button.frame;
+    CGRect tmp2 = label.frame;
+    
+    button.frame = CGRectMake(tmp1.origin.x, tmp1.origin.y + margin, tmp1.size.width, tmp1.size.height);
+    label.frame = CGRectMake(tmp2.origin.x, tmp2.origin.y + margin, tmp2.size.width, tmp2.size.height);
+}
+
+- (void)adjustView:(UIView*)view1 withMargin:(CGFloat)margin {
+    CGRect tmp = view1.frame;
+    view1.frame = CGRectMake(tmp.origin.x, tmp.origin.y + margin, tmp.size.width, tmp.size.height);
 }
 
 #pragma mark -
