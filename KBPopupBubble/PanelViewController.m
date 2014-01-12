@@ -31,9 +31,9 @@
 #import "KBPopupBubbleView.h"
 
 #define kKBSlideDuration    0.4f
-#define kKBCornerRadius     10.0f
-#define kKBBorderWidth      2.0f
-#define kKBLabelColor       [UIColor darkGrayColor]
+#define kKBCornerRadius     16.0f
+#define kKBBorderWidth      1.5f
+#define kKBLabelColor       [UIColor colorWithWhite:0.45f alpha:1.0f]
 #define kKBBorderColor      [UIColor blackColor]
 
 #pragma mark -
@@ -137,6 +137,19 @@
         [self adjustView:self.side withMargin:margin2];
         [self adjustView:self.position1 withMargin:margin2];
         [self adjustView:self.position2 withMargin:margin2];
+        
+        // Adjust the colors on the controls
+        [self adjustSwitchControlColor:self.animate];
+        [self adjustSwitchControlColor:self.shadow];
+        [self adjustSwitchControlColor:self.corners];
+        [self adjustSwitchControlColor:self.draggable];
+        [self adjustSwitchControlColor:self.colors];
+        [self adjustSwitchControlColor:self.borders];
+        
+        [self adjustSegmentedControlColor:self.side];
+        [self adjustSegmentedControlColor:self.position1];
+        
+        [self adjustSliderControlColor:self.position2];
     }
 }
 
@@ -147,6 +160,7 @@
     label.layer.borderWidth  = kKBBorderWidth;
 }
 
+// Hack to adjust positioning in iOS7
 - (void)adjustSwitchControl:(UISwitch*)control {
     CGRect tmp = control.frame;
     control.frame = CGRectMake(205.0f, tmp.origin.y, tmp.size.width, tmp.size.height);
@@ -168,6 +182,24 @@
 - (void)adjustView:(UIView*)view1 withMargin:(CGFloat)margin {
     CGRect tmp = view1.frame;
     view1.frame = CGRectMake(tmp.origin.x, tmp.origin.y + margin, tmp.size.width, tmp.size.height);
+}
+
+// Hacks to adjust colors in iOS7
+- (void)adjustSwitchControlColor:(UISwitch*)control {
+    control.backgroundColor = kKBLabelColor;
+    control.layer.cornerRadius = 16.0f;
+    control.tintColor = [UIColor blackColor];
+    control.onTintColor = [UIColor colorWithRed:(238.0f/255.0) green:(149.0/255.0) blue:0.0f alpha:1.0f];
+}
+
+- (void)adjustSegmentedControlColor:(UISegmentedControl*)control {
+    [control.layer setCornerRadius:5.0f];
+    [control setBackgroundColor:kKBLabelColor];
+    [control setTintColor:[UIColor blackColor]];
+}
+
+- (void)adjustSliderControlColor:(UISlider*)slider {
+    [slider setTintColor:[UIColor blackColor]];
 }
 
 #pragma mark -
