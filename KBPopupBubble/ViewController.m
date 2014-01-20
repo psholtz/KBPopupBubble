@@ -215,6 +215,10 @@ static const BOOL kKBViewControllerDebug = FALSE;
     [_bubble setUseBorders:value];
 }
 
+- (void)setPointerArrow:(BOOL)value {
+    [_bubble setUsePointerArrow:value];
+}
+
 - (void)setDraggable:(BOOL)value {
     [_bubble setDraggable:value];
 }

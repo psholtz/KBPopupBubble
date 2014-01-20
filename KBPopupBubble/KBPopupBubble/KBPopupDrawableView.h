@@ -40,7 +40,9 @@
 @protocol KBPopupDrawableChildDelegate <NSObject>
 
 @optional
+- (BOOL)useRoundedCorners;
 - (BOOL)useBorders;
+- (BOOL)usePointerArrow;
 - (CGFloat)borderWidth;
 - (UIColor*)borderColor;
 - (UIColor*)drawableColor;
@@ -73,6 +75,7 @@
 
 @property (nonatomic, assign) BOOL useRoundedCorners;
 @property (nonatomic, assign) BOOL useBorders;
+@property (nonatomic, assign) BOOL usePointerArrow;
 
 @property (nonatomic, assign)   NSUInteger side;
 @property (nonatomic, assign)   CGFloat position;

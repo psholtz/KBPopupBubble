@@ -36,6 +36,7 @@
 - (void)setShadow:(BOOL)value;
 - (void)setCorners:(BOOL)value;
 - (void)setBorders:(BOOL)value;
+- (void)setPointerArrow:(BOOL)value;
 - (void)setDraggable:(BOOL)value;
 - (void)setColors:(BOOL)value;
 - (void)setSide:(NSUInteger)side;

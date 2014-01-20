@@ -59,8 +59,8 @@
                 CGContextAddLineToPoint(context, 0.0f, kKBPopupArrowWidth + kKBPopupArrowAdjustment);
                 break;
         }
-        
-        UIColor * targetColor = [self.delegate useBorders] ? [self.delegate borderColor] : [self.delegate drawableColor];
+                
+        UIColor * targetColor = [self.delegate usePointerArrow] ? ([self.delegate useBorders] ? [self.delegate borderColor] : [self.delegate drawableColor]) : [UIColor clearColor];
         CGContextSetFillColorWithColor(context, targetColor.CGColor);
     }
 
@@ -97,6 +97,12 @@
 
 - (void)setUseBorders:(BOOL)useBorders {
     _useBorders = useBorders;
+    [self updateCover];
+    [self updateArrow];
+}
+
+- (void)setUsePointerArrow:(BOOL)usePointerArrow {
+    _usePointerArrow = usePointerArrow;
     [self updateCover];
     [self updateArrow];
 }

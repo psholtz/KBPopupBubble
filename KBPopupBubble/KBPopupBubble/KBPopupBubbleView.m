@@ -89,6 +89,17 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     [[self drawable] setUseBorders:useBorders];
 }
 
+- (void)setUsePointerArrow:(BOOL)usePointerArrow {
+    // Update present object
+    _usePointerArrow = usePointerArrow;
+    [self configureShadow];
+    
+    // Update drawable object
+    [[self drawable] setUsePointerArrow:usePointerArrow];
+    [[self drawable] updateCover];
+    [[self drawable] updateArrow];
+}
+
 // COLORS
 - (void)setDrawableColor:(UIColor *)drawableColor {
     _drawableColor = drawableColor;
@@ -257,6 +268,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     [self setUseDropShadow:kKBPopupDefaultUseDropShadow];
     [self setUseRoundedCorners:kKBPopupDefaultUseRoundedCorners];
     [self setUseBorders:kKBPopupDefaultUseBorders];
+    [self setUsePointerArrow:kKBPopupDefaultUsePointerArrow];
     [self setDraggable:kKBPopupDefaultDraggable];
     
     [self setUserInteractionEnabled:YES];
@@ -298,27 +310,29 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
         
         // Configure the Bezier Path
         UIBezierPath *path = _useRoundedCorners ? [UIBezierPath bezierPathWithRoundedRect:_shadow.bounds cornerRadius:_cornerRadius] : [UIBezierPath bezierPathWithRect:_shadow.bounds];
-        switch ( _side ) {
-            case kKBPopupPointerSideTop:
-                [path moveToPoint:CGPointMake(targetX, targetY + kKBPopupArrowHeight)];
-                [path addLineToPoint:CGPointMake(targetX + base, targetY)];
-                [path addLineToPoint:CGPointMake(targetX + 2 * base, targetY + kKBPopupArrowHeight)];
-                break;
-            case kKBPopupPointerSideBottom:
-                [path moveToPoint:CGPointMake(targetX, targetY)];
-                [path addLineToPoint:CGPointMake(targetX + base, targetY + kKBPopupArrowHeight)];
-                [path addLineToPoint:CGPointMake(targetX + 2 * base, targetY)];
-                break;
-            case kKBPopupPointerSideLeft:
-                [path moveToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY)];
-                [path addLineToPoint:CGPointMake(targetX, targetY + base)];
-                [path addLineToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY + 2 * base)];
-                break;
-            case kKBPopupPointerSideRight:
-                [path moveToPoint:CGPointMake(targetX,targetY)];
-                [path addLineToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY + base)];
-                [path addLineToPoint:CGPointMake(targetX, targetY + 2 * base)];
-                break;
+        if ( _usePointerArrow ) {
+            switch ( _side ) {
+                case kKBPopupPointerSideTop:
+                    [path moveToPoint:CGPointMake(targetX, targetY + kKBPopupArrowHeight)];
+                    [path addLineToPoint:CGPointMake(targetX + base, targetY)];
+                    [path addLineToPoint:CGPointMake(targetX + 2 * base, targetY + kKBPopupArrowHeight)];
+                    break;
+                case kKBPopupPointerSideBottom:
+                    [path moveToPoint:CGPointMake(targetX, targetY)];
+                    [path addLineToPoint:CGPointMake(targetX + base, targetY + kKBPopupArrowHeight)];
+                    [path addLineToPoint:CGPointMake(targetX + 2 * base, targetY)];
+                    break;
+                case kKBPopupPointerSideLeft:
+                    [path moveToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY)];
+                    [path addLineToPoint:CGPointMake(targetX, targetY + base)];
+                    [path addLineToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY + 2 * base)];
+                    break;
+                case kKBPopupPointerSideRight:
+                    [path moveToPoint:CGPointMake(targetX,targetY)];
+                    [path addLineToPoint:CGPointMake(targetX + kKBPopupArrowHeight, targetY + base)];
+                    [path addLineToPoint:CGPointMake(targetX, targetY + 2 * base)];
+                    break;
+            }
         }
         [path closePath];
         

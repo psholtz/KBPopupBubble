@@ -57,6 +57,7 @@ enum {
 #define kKBPopupDefaultUseRoundedCorners     YES
 #define kKBPopupDefaultUseBorders            YES
 #define kKBPopupDefaultUseGradient           YES
+#define kKBPopupDefaultUsePointerArrow       YES
 #define kKBPopupDefaultDraggable             YES
 #define kKBPopupDefaultShadowBackgroundColor [UIColor blackColor]
 #define kKBPopupDefaultDrawableColor         [UIColor colorWithRed:0.95f green:0.0f blue:0.0f alpha:1.0f]
@@ -95,6 +96,7 @@ enum {
 @property (nonatomic, assign) BOOL useDropShadow;
 @property (nonatomic, assign) BOOL useRoundedCorners;
 @property (nonatomic, assign) BOOL useBorders;
+@property (nonatomic, assign) BOOL usePointerArrow;
 
 @property (nonatomic, assign) BOOL draggable;
 
