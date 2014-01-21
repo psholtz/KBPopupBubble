@@ -193,7 +193,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     CGPoint p1 = CGPointMake(r1.origin.x + r1.size.width/2.0f, r1.origin.y + r1.size.height/2.0f);
     self = [super initWithFrame:[KBPopupBubbleView defaultKBRectWithCenterPoint:p1]];
     if ( self ) {
-        [self configure];
+        [self configureWithDefaults:YES];
     }
     return self;
 }
@@ -201,7 +201,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if ( self ) {
-        [self configure];
+        [self configureWithDefaults:YES];
     }
     return self;
 }
@@ -209,7 +209,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if ( self ) {
-        [self configure];
+        [self configureWithDefaults:YES];
     }
     return self;
 }
@@ -217,32 +217,34 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 - (id)initWithCenter:(CGPoint)center {
     self = [super initWithFrame:[KBPopupBubbleView defaultKBRectWithCenterPoint:center]];
     if ( self ) {
-        [self configure];
+        [self configureWithDefaults:YES];
     }
     return self;
 }
 
-- (void)configure {
+- (void)configureWithDefaults:(BOOL)useDefaults {
     [self setBackgroundColor:[UIColor clearColor]];
-    _drawableColor   = kKBPopupDefaultDrawableColor;
     
-    _margin      = kKBDefaultMargin;
-    _paddingSide = kKBDefaultPaddingSide;
-    _paddingTop  = kKBDefaultPaddingTop;
-    _position    = kKBPopupDefaultPosition;
-    _side        = kKBPopupDefaultSide;
-    
-    _cornerRadius       = kKBPopupDefaultCornerRadius;
-    _animationDuration  = kKBPopupDefaultAnimationDuration;
-    _shadowOpacity      = kKBPopupDefaultShadowOpacity;
-    _shadowRadius       = kKBPopupDefaultShadowRadius;
-    _shadowOffset       = kKBPopupDefaultShadowOffset;
-    _shadowColor        = kKBPopupDefaultShadowBackgroundColor;
-    _borderColor        = kKBPopupDefaultBorderColor;
-    _borderWidth        = kKBPopupDefaultBorderWidth;
-    
-    _completionBlocks     = [[NSMutableDictionary alloc] init];
-    _completionBlockDelay = kKBPopupDefaultCompletionDelay;
+    if ( useDefaults ) {
+        _drawableColor  = kKBPopupDefaultDrawableColor;
+        _margin         = kKBDefaultMargin;
+        _paddingSide    = kKBDefaultPaddingSide;
+        _paddingTop     = kKBDefaultPaddingTop;
+        _position       = kKBPopupDefaultPosition;
+        _side           = kKBPopupDefaultSide;
+        
+        _cornerRadius       = kKBPopupDefaultCornerRadius;
+        _animationDuration  = kKBPopupDefaultAnimationDuration;
+        _shadowOpacity      = kKBPopupDefaultShadowOpacity;
+        _shadowRadius       = kKBPopupDefaultShadowRadius;
+        _shadowOffset       = kKBPopupDefaultShadowOffset;
+        _shadowColor        = kKBPopupDefaultShadowBackgroundColor;
+        _borderColor        = kKBPopupDefaultBorderColor;
+        _borderWidth        = kKBPopupDefaultBorderWidth;
+        
+        _completionBlocks     = [[NSMutableDictionary alloc] init];
+        _completionBlockDelay = kKBPopupDefaultCompletionDelay;
+    }
     
     CGRect rect1 = CGRectMake(_margin,
                               _margin,
@@ -265,12 +267,14 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     _label.numberOfLines = 0;
     [_drawable addSubview:_label];
     
-    [self setUseDropShadow:kKBPopupDefaultUseDropShadow];
-    [self setUseRoundedCorners:kKBPopupDefaultUseRoundedCorners];
-    [self setUseBorders:kKBPopupDefaultUseBorders];
-    [self setUsePointerArrow:kKBPopupDefaultUsePointerArrow];
-    [self setDraggable:kKBPopupDefaultDraggable];
-    
+    if ( useDefaults ) {
+        [self setUseDropShadow:kKBPopupDefaultUseDropShadow];
+        [self setUseRoundedCorners:kKBPopupDefaultUseRoundedCorners];
+        [self setUseBorders:kKBPopupDefaultUseBorders];
+        [self setUsePointerArrow:kKBPopupDefaultUsePointerArrow];
+        [self setDraggable:kKBPopupDefaultDraggable];
+    }
+        
     [self setUserInteractionEnabled:YES];
     
     [self addSubview:_shadow];
