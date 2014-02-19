@@ -21,7 +21,7 @@ Example Usage
 Probably the easiest way to construct a KBPopupBubble would be to make use of one of the following constructors:
 
 <pre>
-KBPopupBubbleView *bubble1 = [[KBPopupBubbleView alloc] initwithCenter:CGPointMake(x, y)];
+KBPopupBubbleView *bubble1 = [[KBPopupBubbleView alloc] initWithCenter:CGPointMake(x, y)];
 </pre>
 
 In this case, the bubble is centered at the argument point, and the width and height of the frame are constructed using the static constants *kKBDefaultWidth* and *kKBDefaultHeight*, which are defined at the top of the *KBPopupBubbleView.m* file and which the user can customize in the source code.
