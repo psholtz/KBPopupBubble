@@ -452,7 +452,7 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     }
     
     if ( completionBlock != nil ) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, self.completionBlockDelay * NSEC_PER_SEC) , dispatch_get_current_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, self.completionBlockDelay * NSEC_PER_SEC) , dispatch_get_main_queue(), ^{
             completionBlock();
         });
     }

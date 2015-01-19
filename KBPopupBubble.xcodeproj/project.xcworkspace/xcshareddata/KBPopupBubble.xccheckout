@@ -10,29 +10,29 @@
 	<string>KBPopupBubble</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>940CA1FB-277F-4506-9991-427E6530E713</key>
+		<key>D47C9EDED4D6AE2CCFBFFA73888B47AA5B86D1C1</key>
 		<string>https://github.com/psholtz/KBPopupBubble.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>KBPopupBubble.xcodeproj/project.xcworkspace</string>
+	<string>KBPopupBubble.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>940CA1FB-277F-4506-9991-427E6530E713</key>
+		<key>D47C9EDED4D6AE2CCFBFFA73888B47AA5B86D1C1</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/psholtz/KBPopupBubble.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>940CA1FB-277F-4506-9991-427E6530E713</string>
+	<string>D47C9EDED4D6AE2CCFBFFA73888B47AA5B86D1C1</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>940CA1FB-277F-4506-9991-427E6530E713</string>
+			<string>D47C9EDED4D6AE2CCFBFFA73888B47AA5B86D1C1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>KBPopupBubble</string>
 		</dict>
