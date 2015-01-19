@@ -188,7 +188,10 @@ static const BOOL kKBViewControllerDebug = FALSE;
     // (IMPORTANT: Use a weak reference here, otherwise you end up with a retain cycle and dealloc never gets called!)
     KB_WEAK_REF typeof(bubble) _weakBubble = bubble;
     void (^completion)(void) = ^{
-        [_weakBubble setPosition:0.0f animated:YES];
+        __strong typeof(bubble) _strongBubble = _weakBubble;
+        if ( _strongBubble ) {
+            [_strongBubble setPosition:0.0f animated:YES];
+        }
     };
     [bubble setCompletionBlock:completion forAnimationKey:kKBPopupAnimationPopIn];
 }

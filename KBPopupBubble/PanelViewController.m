@@ -211,15 +211,16 @@
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             CGRect f = CGRectMake(_weakSelf.view.frame.origin.x,
-                                                   _weakSelf.active ? (-1) * (_weakSelf.view.frame.size.height - [_weakSelf.delegate margin]) : 0.0f,
-                                                   _weakSelf.view.frame.size.width,
-                                                   _weakSelf.view.frame.size.height);
-                             _weakSelf.view.frame = f;
+                             __strong typeof(self) _strongSelf = _weakSelf;
+                             if ( _strongSelf ) {
+                                 CGRect f = CGRectMake(_strongSelf.view.frame.origin.x,
+                                                       _strongSelf.active ? (-1) * (_strongSelf.view.frame.size.height - [_strongSelf.delegate margin]) : 0.0f,
+                                                       _strongSelf.view.frame.size.width,
+                                                       _strongSelf.view.frame.size.height);
+                                 _strongSelf.view.frame = f;
+                             }
                          }
-                         completion:^(BOOL completed) {
-                         }
-         ];
+                         completion:nil];
     }
 }
 
