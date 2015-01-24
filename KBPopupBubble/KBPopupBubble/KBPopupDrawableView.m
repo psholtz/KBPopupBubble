@@ -28,9 +28,11 @@
 
 #import "KBPopupDrawableView.h"
 
-#pragma mark -
-#pragma mark Implementation (Arrow View)
+#pragma mark - Implementation (Arrow View)
+
 @implementation KBPopupArrowView
+
+#pragma mark - Drawing
 
 // Draw pointer arrow
 - (void)drawRect:(CGRect)rect {
@@ -69,27 +71,23 @@
 
 @end
 
-#pragma mark -
-#pragma mark Implementation (Cover View)
+
+#pragma mark - Implementation (Cover View)
+
 @implementation KBPopupCoverView
-
 @end
 
-#pragma mark -
-#pragma mark Internal Interface
+#pragma mark - Class Extension (Drawable View)
+
 @interface KBPopupDrawableView() <KBPopupDrawableChildDelegate>
-
 @end
 
-#pragma mark -
-#pragma mark Implementation (Drawable View)
+#pragma mark - Class Implementation (Drawable View)
+
 @implementation KBPopupDrawableView
 
-#pragma mark -
-#pragma mark Getter/Setters
-//
-// GETTERS AND SETTERS
-//
+#pragma mark - Accessors
+
 - (void)setUseRoundedCorners:(BOOL)useRoundedCorners {
     _useRoundedCorners = useRoundedCorners;
     [self updateCover];
@@ -131,11 +129,8 @@
     [self updateArrow];
 }
 
-#pragma mark -
-#pragma mark Constructors
-//
-// CONSTRUCTORS
-//
+#pragma mark - Constructors
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if ( self ) {
@@ -207,8 +202,8 @@
     return rect;
 }
 
-#pragma mark -
-#pragma mark External Methods
+#pragma mark - Public API
+
 - (void)updateArrow {
     self.arrow.frame = [self rectForPosition:_position];
     [self.arrow setNeedsDisplay];

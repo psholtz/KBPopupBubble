@@ -35,8 +35,7 @@
 //
 // Add the view to the target view, using animations
 //
-- (void)popIn
-{
+- (void)popIn {
     // Clear existing animations
     [self.layer removeAllAnimations];
     
@@ -48,8 +47,7 @@
 //
 // Remove the view from the target view, using animations
 //
-- (void)popOut
-{
+- (void)popOut {
     // Clear existing animations
     [self.layer removeAllAnimations];
     

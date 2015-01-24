@@ -30,6 +30,8 @@
 
 @protocol PanelViewControllerDelegate <NSObject>
 
+#pragma mark - Required
+
 // Wrappers for the KBPopupView
 @required
 - (void)setAnimate:(BOOL)value;
@@ -49,6 +51,8 @@
 #pragma mark - PanelViewController Interface 
 
 @interface PanelViewController : UIViewController
+
+#pragma mark - Properties 
 
 @property (nonatomic, KB_WEAK) IBOutlet UISwitch *shadow;
 @property (nonatomic, KB_WEAK) IBOutlet UISwitch *corners;

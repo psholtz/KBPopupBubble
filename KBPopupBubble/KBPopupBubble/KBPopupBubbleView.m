@@ -42,6 +42,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 @interface KBPopupBubbleView()
 
+#pragma mark - Properties
+
 @property (nonatomic, strong) KBPopupDrawableView * drawable;
 @property (nonatomic, strong) UIView * shadow;
 @property (nonatomic, assign) CGFloat targetPosition;

@@ -30,15 +30,19 @@
 
 #import "KBPopupBubbleView.h"
 
+#pragma mark - Defines
+
 #define kKBSlideDuration    0.4f
 #define kKBCornerRadius     16.0f
 #define kKBBorderWidth      1.5f
 #define kKBLabelColor       [UIColor colorWithWhite:0.45f alpha:1.0f]
 #define kKBBorderColor      [UIColor blackColor]
 
-#pragma mark -
-#pragma mark Internal Interface
+#pragma mark - Class Extension
+
 @interface PanelViewController ()
+
+#pragma mark - Properties
 
 @property (nonatomic, KB_WEAK) IBOutlet UILabel *label1;
 @property (nonatomic, KB_WEAK) IBOutlet UILabel *label2;
@@ -59,9 +63,11 @@
 
 @end
 
-#pragma mark -
-#pragma mark Implementation
+#pragma mark - Implementation
+
 @implementation PanelViewController
+
+#pragma mark - Constructor
 
 - (id)init {
     // Select the name
@@ -79,6 +85,8 @@
     }
     return self;
 }
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -201,7 +209,7 @@
     [slider setTintColor:[UIColor blackColor]];
 }
 
-#pragma mark - IBAction Method
+#pragma mark - IBAction Methods
 
 - (IBAction)pressButton1:(id)sender {
     if ( self.delegate != nil && [self.delegate respondsToSelector:@selector(margin)] ) {

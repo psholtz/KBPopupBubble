@@ -30,6 +30,8 @@
 
 @interface KBPopupBubbleView (Animations)
 
+#pragma mark - Methods
+
 - (void)popIn;
 - (void)popOut;
 

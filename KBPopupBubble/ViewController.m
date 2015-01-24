@@ -44,6 +44,8 @@ static const BOOL kKBViewControllerDebug = FALSE;
     NSInteger _colorIndex;
 }
 
+#pragma mark - Properties
+
 @property (nonatomic, strong) PanelViewController * panel;
 @property (nonatomic, strong) KBPopupBubbleView   * bubble;
 
@@ -52,6 +54,8 @@ static const BOOL kKBViewControllerDebug = FALSE;
 #pragma mark - Implementation
 
 @implementation ViewController
+
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
