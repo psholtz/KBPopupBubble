@@ -38,9 +38,9 @@ static const CGFloat kKBDefaultPaddingSide = 12.0f;
 
 static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
-#pragma mark -
-#pragma mark Internal Interface
-@interface KBPopupBubbleView() 
+#pragma mark - Class Extension
+
+@interface KBPopupBubbleView()
 
 @property (nonatomic, strong) KBPopupDrawableView * drawable;
 @property (nonatomic, strong) UIView * shadow;
@@ -50,15 +50,11 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
 
 @end
 
-#pragma mark -
-#pragma mark Implementation
+#pragma mark - Class Implementation
+
 @implementation KBPopupBubbleView
 
-#pragma mark -
-#pragma mark Selectors
-//
-// SELECTORS
-//
+#pragma mark - Accessors
 
 // POSITIONS
 - (void)setPosition:(CGFloat)position {
@@ -183,11 +179,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     [self configureShadow];
 }
 
-#pragma mark -
-#pragma mark Constructors
-//
-// CONSTRUCTORS
-//
+#pragma mark - Constructors
+
 - (id)init {
     CGRect r1 = [UIScreen mainScreen].bounds;
     CGPoint p1 = CGPointMake(r1.origin.x + r1.size.width/2.0f, r1.origin.y + r1.size.height/2.0f);
@@ -353,8 +346,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
                       kKBDefaultHeight);
 }
 
-#pragma mark -
-#pragma mark View Lifecycle
+#pragma mark  - View Lifecycle
+
 // View Lifecycle
 - (void)showInView:(UIView*)target animated:(BOOL)animated {
     [target addSubview:self];
@@ -419,8 +412,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     }
 }
 
-#pragma mark -
-#pragma mark CAAnimation Delegate
+#pragma mark - CAAnimation Delegate
+
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
     // COMPLETION BLOCK
     void (^completionBlock)(void) = nil;
@@ -458,8 +451,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     }
 }
 
-#pragma mark -
-#pragma mark Event Handlers
+#pragma mark - Event Handlers
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint p1 = [[touches anyObject] locationInView:self];
     CGPoint p2 = [[touches anyObject] locationInView:self.superview];
@@ -509,11 +502,8 @@ static const CGFloat kKBDefaultSlideDuration = 0.4f;
     }
 }
 
-#pragma mark -
-#pragma mark Completion Blocks
-//
-// Completion Blocks
-//
+#pragma mark - Completion Blocks
+
 - (void)setCompletionBlock:(KBPopupBubbleCompletionBlock)completion forAnimationKey:(NSString*)animation {
     if ( self.completionBlocks != nil ) {
         [self.completionBlocks setObject:completion forKey:animation];

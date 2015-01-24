@@ -34,10 +34,9 @@ static const CGFloat kKBPanelMargin = 68.0f;
 
 static const BOOL kKBViewControllerDebug = FALSE;
 
-#pragma mark -
-#pragma mark View Controller Interface
-@interface ViewController () <PanelViewControllerDelegate, KBPopupBubbleViewDelegate>
-{
+#pragma mark - Class Extension
+
+@interface ViewController () <PanelViewControllerDelegate, KBPopupBubbleViewDelegate> {
     BOOL _useAnimations;
     BOOL _useColorsRotate;
     NSArray * _colors;
@@ -50,12 +49,11 @@ static const BOOL kKBViewControllerDebug = FALSE;
 
 @end
 
-#pragma mark -
-#pragma mark View Controller Implementation 
+#pragma mark - Implementation
+
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // Add the control panel
@@ -90,8 +88,8 @@ static const BOOL kKBViewControllerDebug = FALSE;
     _colorIndex = _colors.count - 1;
 }
 
-#pragma mark -
-#pragma mark Event Handlers
+#pragma mark - Event Handlers
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     // Manage touches so that we can demonstrate the handlers in the KBPopupBubbleView
     CGPoint p = [[touches anyObject] locationInView:self.panel.view];
@@ -185,7 +183,6 @@ static const BOOL kKBViewControllerDebug = FALSE;
     bubble.borderColor = [_colorsBorder objectAtIndex:_colorIndex];
     
     // Demonstrate how a completion block works
-    // (IMPORTANT: Use a weak reference here, otherwise you end up with a retain cycle and dealloc never gets called!)
     KB_WEAK_REF typeof(bubble) _weakBubble = bubble;
     void (^completion)(void) = ^{
         __strong typeof(bubble) _strongBubble = _weakBubble;
@@ -196,8 +193,8 @@ static const BOOL kKBViewControllerDebug = FALSE;
     [bubble setCompletionBlock:completion forAnimationKey:kKBPopupAnimationPopIn];
 }
 
-#pragma mark -
-#pragma mark Protocol Delegate
+#pragma mark - Protocol Delegate
+
 - (CGFloat)margin {
     return kKBPanelMargin;
 }
@@ -242,8 +239,8 @@ static const BOOL kKBViewControllerDebug = FALSE;
     [_bubble setPosition:position animated:animated];
 }
 
-#pragma mark -
-#pragma mark KBPopupBubbleViewDelegate
+#pragma mark - KBPopupBubbleViewDelegate
+
 - (void)didTapBubbleTouchDown:(id)sender {
     // Implement delegate callback however you wish
     if ( kKBViewControllerDebug ) {

@@ -28,6 +28,8 @@
 
 typedef void (^KBPopupBubbleCompletionBlock)(void);
 
+#pragma mark - Defines 
+
 // Placeholder constants for user to use, for simplicity
 #define kKBPopupPointerPositionLeft       0.0f
 #define kKBPopupPointerPositionMiddle     0.5f
@@ -73,9 +75,11 @@ enum {
 #define kKBPopupDefaultPosition              kKBPopupPointerPositionMiddle
 #define kKBPopupDefaultSide                  kKBPopupPointerSideTop
 
-#pragma mark -
-#pragma mark Delegate Protocol
+#pragma mark  - Delegate Protocol
+
 @protocol KBPopupBubbleViewDelegate <NSObject>
+
+#pragma mark - Optional 
 
 @optional
 - (void)didTapBubbleTouchDown:(id)sender;
@@ -84,9 +88,11 @@ enum {
 
 @end
 
-#pragma mark -
-#pragma mark Interface (Public)
+#pragma mark  - Interface (Public)
+
 @interface KBPopupBubbleView : UIView
+
+#pragma mark - Properties (Public) 
 
 @property (nonatomic, assign)   CGFloat position;
 @property (nonatomic, readonly) CGFloat margin;
@@ -117,6 +123,8 @@ enum {
 @property (nonatomic, assign) CGFloat completionBlockDelay;
 
 @property (nonatomic, assign) id<KBPopupBubbleViewDelegate> delegate;
+
+#pragma mark - Methods (Public)
 
 // ================
 // PUBLIC INTERFACE

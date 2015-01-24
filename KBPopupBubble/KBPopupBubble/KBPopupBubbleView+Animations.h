@@ -26,10 +26,11 @@
 
 #import "KBPopupBubbleView.h"
 
+#pragma mark - Animation Category
+
 @interface KBPopupBubbleView (Animations)
 
 - (void)popIn;
-
 - (void)popOut;
 
 @end

@@ -26,6 +26,8 @@
 
 #import "KBPopupBubbleView.h"
 
+#pragma mark - Defines
+
 //
 // (1) Works best if kKBArrowHeight matches kKBDefaultMargin
 // (2) kKBPopupArrowAdjustment is a slight adjustment to make animations work more smoothly
@@ -35,9 +37,11 @@
 #define kKBPopupArrowHeight     8.0f
 #define kKBPopupArrowAdjustment 1.0f
 
-#pragma mark -
-#pragma mark Arrow Delegate
+#pragma mark - Arrow Delegate
+
 @protocol KBPopupDrawableChildDelegate <NSObject>
+
+#pragma mark - Optional
 
 @optional
 - (BOOL)useRoundedCorners;
@@ -50,9 +54,11 @@
 
 @end
 
-#pragma mark -
-#pragma mark Arrow Interface 
+#pragma mark - Arrow Interface 
+
 @interface  KBPopupArrowView : UIView
+
+#pragma mark - Properties
 
 @property (nonatomic, KB_WEAK) id<KBPopupDrawableChildDelegate> delegate;
 
@@ -62,13 +68,17 @@
 #pragma mark Cover Interface
 @interface KBPopupCoverView : UIView 
 
+#pragma mark - Properties
+
 @property (nonatomic, KB_WEAK) id<KBPopupDrawableChildDelegate> delegate;
 
 @end
 
-#pragma mark -
-#pragma mark Drawable Interface
+#pragma mark - Drawable Interface
+
 @interface KBPopupDrawableView : UIView
+
+#pragma mark - Properties
 
 @property (nonatomic, strong) KBPopupArrowView *arrow;
 @property (nonatomic, strong) KBPopupCoverView *cover;
@@ -87,8 +97,9 @@
 @property (nonatomic, strong) UIColor *drawableColor;
 @property (nonatomic, strong) UIColor *borderColor;
 
-- (void)updateArrow;
+#pragma mark - Methods
 
+- (void)updateArrow;
 - (void)updateCover;
 
 @end

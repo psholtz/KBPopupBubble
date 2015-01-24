@@ -30,8 +30,8 @@
 
 @implementation KBPopupBubbleView (Animations)
 
-#pragma mark -
-#pragma mark Public Interface
+#pragma mark - Public Interface
+
 //
 // Add the view to the target view, using animations
 //
@@ -58,8 +58,8 @@
     [self.layer addAnimation:animation forKey:(NSString*)kKBPopupAnimationPopOut];
 }
 
-#pragma mark -
-#pragma mark Internal Methods
+#pragma mark - Internal Methods
+
 - (CAAnimation*)generatePopInAnimation {
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = self.animationDuration;

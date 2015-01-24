@@ -24,6 +24,8 @@
 //  Created by Paul Sholtz on 4/6/13.
 //
 
+#pragma mark - Weak Linking 
+
 //
 // Macro for weak linking, in case we want to support 4.3 and before
 //
@@ -45,6 +47,8 @@
 #endif 
 #endif // KB_WEAK_REF
 
+#pragma mark - Hardware Detection
+
 //
 // Macros for hardware detection
 //
@@ -52,6 +56,8 @@
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define IS_IPHONE_5 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 568.0f)
 #define IS_IPHONE_4 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 480.0f)
+
+#pragma mark - Logging
 
 //
 // Macros for debugging

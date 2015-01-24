@@ -26,8 +26,8 @@
 
 #import "KBPopupHeaders.h" 
 
-#pragma mark -
-#pragma mark Panel View Controller Protocol
+#pragma mark  - PanelViewController Protocol
+
 @protocol PanelViewControllerDelegate <NSObject>
 
 // Wrappers for the KBPopupView
@@ -46,8 +46,8 @@
 
 @end
 
-#pragma mark -
-#pragma mark Panel View Controller Interface 
+#pragma mark - PanelViewController Interface 
+
 @interface PanelViewController : UIViewController
 
 @property (nonatomic, KB_WEAK) IBOutlet UISwitch *shadow;

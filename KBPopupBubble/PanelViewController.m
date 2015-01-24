@@ -80,8 +80,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
     CGFloat a = 0.4f;
@@ -176,11 +175,11 @@
     CGRect tmp2 = label.frame;
     
     button.frame = CGRectMake(tmp1.origin.x, tmp1.origin.y + margin, tmp1.size.width, tmp1.size.height);
-    label.frame = CGRectMake(tmp2.origin.x, tmp2.origin.y + margin, tmp2.size.width, tmp2.size.height);
+    label.frame  = CGRectMake(tmp2.origin.x, tmp2.origin.y + margin, tmp2.size.width, tmp2.size.height);
 }
 
 - (void)adjustView:(UIView*)view1 withMargin:(CGFloat)margin {
-    CGRect tmp = view1.frame;
+    CGRect tmp  = view1.frame;
     view1.frame = CGRectMake(tmp.origin.x, tmp.origin.y + margin, tmp.size.width, tmp.size.height);
 }
 
@@ -202,8 +201,8 @@
     [slider setTintColor:[UIColor blackColor]];
 }
 
-#pragma mark -
-#pragma mark IBAction Method
+#pragma mark - IBAction Method
+
 - (IBAction)pressButton1:(id)sender {
     if ( self.delegate != nil && [self.delegate respondsToSelector:@selector(margin)] ) {
         KB_WEAK_REF typeof(self) _weakSelf = self;
@@ -316,8 +315,8 @@
     }
 }
 
-#pragma mark -
-#pragma mark Internal Methods
+#pragma mark - Internal Methods
+
 - (BOOL)active {
     return self.view.frame.origin.y == 0.0f;
 }
