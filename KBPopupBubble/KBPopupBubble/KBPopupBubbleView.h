@@ -45,7 +45,7 @@ typedef void (^KBPopupBubbleCompletionBlock)(void);
 #define kKBAnimationKeyShadowPosition   @"shadowPosition"
 
 // Which side of the bubble to render the pointer
-enum {
+typedef NS_ENUM(NSInteger, kKBPopupPointerSide) {
     kKBPopupPointerSideTop,
     kKBPopupPointerSideBottom,
     kKBPopupPointerSideLeft,
